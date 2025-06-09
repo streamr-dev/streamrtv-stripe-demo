@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-export default function OnboardingSuccess() {
+function OnboardingSuccessContent() {
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -44,5 +44,13 @@ export default function OnboardingSuccess() {
         </div>
       </div>
     </div>
+  );
+}
+
+export default function OnboardingSuccess() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <OnboardingSuccessContent />
+    </Suspense>
   );
 }
