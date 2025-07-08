@@ -74,7 +74,7 @@ export function Card({ emoji, price, name, accountId, className }: CardProps) {
 
   const handleClick = async () => {
     try {
-      const response = await fetch("/api/stripe/create-payment-intent", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001'}/api/stripe/create-payment-intent`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

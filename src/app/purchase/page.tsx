@@ -19,7 +19,7 @@ export default function PurchasePage() {
   useEffect(() => {
     const fetchAccounts = async () => {
       try {
-        const response = await fetch("/api/stripe/accounts");
+        const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001'}/api/stripe/accounts`);
         const data = await response.json();
 
         if (!response.ok) {

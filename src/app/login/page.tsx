@@ -14,7 +14,7 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const response = await fetch("/api/stripe/lookup-account", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001'}/api/stripe/lookup-account`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

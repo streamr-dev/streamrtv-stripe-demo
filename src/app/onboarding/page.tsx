@@ -17,7 +17,7 @@ export default function OnboardingPage() {
     setError("");
 
     try {
-      const response = await fetch("/api/stripe/onboard", {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001'}/api/stripe/onboard`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

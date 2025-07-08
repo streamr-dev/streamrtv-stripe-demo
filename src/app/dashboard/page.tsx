@@ -34,7 +34,7 @@ export default function DashboardPage() {
         }
 
         const response = await fetch(
-          `/api/stripe/dashboard?accountId=${accountId}`
+          `${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001'}/api/stripe/dashboard?accountId=${accountId}`
         );
         const data = await response.json();
 
