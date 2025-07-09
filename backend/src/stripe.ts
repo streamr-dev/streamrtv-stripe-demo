@@ -38,6 +38,30 @@ router.post('/create-payment-intent', async (req: Request, res: Response, next: 
   }
 });
 
+// TODO: remove, for testing purposes
+  router.get('/get-payment-intents', async (req: Request, res: Response, next: NextFunction) => {
+    try {
+         // List payment intents for the connected account
+              const paymentIntents = await stripe.paymentIntents.list({
+           limit: 100
+         });
+
+         res.json({
+          paymentIntents: paymentIntents.data.map((intent) => ({
+            id: intent.id,
+            amount: intent.amount / 100, // Convert back to dollars
+            currency: intent.currency,
+            status: intent.status,
+            created: new Date(intent.created * 1000).toISOString(),
+            metadata: intent.metadata,
+          })),
+         });
+       } catch (error) {
+       console.error('Error fetching payment intents:', error);
+        next(error);
+        }
+   });
+
 router.get('/accounts', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const accounts = await stripe.accounts.list({ limit: 100 }); // TODO: pagination after 100 accounts
