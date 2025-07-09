@@ -25,6 +25,10 @@ router.post('/create-payment-intent', async (req: Request, res: Response, next: 
       transfer_data: {
         destination: connectedAccountId, // TODO: validate connected account ID
       },
+      metadata: {
+        broadcastId: 'some-broadcast-id', // TODO: replace with actual broadcast ID from request
+        viewerNodeId: 'some-viewer-node', // TODO replace with actual viewer node ID from request
+      }
     });
 
     res.json({ clientSecret: paymentIntent.client_secret });
