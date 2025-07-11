@@ -1,31 +1,28 @@
 import request from 'supertest';
 import express from 'express';
-import accountsRouter from '../src/stripe/accounts';
+import accountsRouter from '../src/endpoints/accounts';
+import StripeWrapper from '../src/endpoints/StripeWrapper';
+import { mock } from 'jest-mock-extended';
 
-jest.mock('stripe', () => {
-  return jest.fn().mockImplementation(() => ({
-    accounts: {
-      list: jest.fn().mockResolvedValue({
-        data: [
-          {
-            id: 'acct_1',
-            business_profile: { name: 'Test Business' },
-            email: 'test@example.com',
-            country: 'US',
-            charges_enabled: true,
-          },
-          {
-            id: 'acct_2',
-            business_profile: { name: null },
-            email: 'disabled@example.com',
-            country: 'CA',
-            charges_enabled: false,
-          },
-        ],
-      }),
+const mockStripeWrapper = mock<StripeWrapper>();
+mockStripeWrapper.listAccounts.mockResolvedValue({
+  data: [
+    {
+      id: 'acct_1',
+      business_profile: { name: 'Test Business' },
+      email: 'test@example.com',
+      country: 'US',
+      charges_enabled: true,
     },
-  }));
-});
+    {
+      id: 'acct_2',
+      business_profile: { name: null },
+      email: 'disabled@example.com',
+      country: 'CA',
+      charges_enabled: false,
+    },
+  ],
+} as any);
 
 describe('GET /accounts', () => {
   let app: express.Express;
@@ -33,7 +30,7 @@ describe('GET /accounts', () => {
   beforeAll(() => {
     app = express();
     app.use(express.json());
-    app.use('/accounts', accountsRouter);
+    app.use('/accounts', accountsRouter(mockStripeWrapper));
   });
 
   it('should return enabled Stripe accounts', async () => {
