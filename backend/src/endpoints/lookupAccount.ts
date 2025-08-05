@@ -7,6 +7,7 @@ export const lookupAccountSchema = z.object({
   email: z.string().email(),
 });
 
+// TODO: can be removed if we don't need dashboard functionality
 export default function lookupAccount(stripeWrapper: StripeWrapper): Router {
   const router = Router();
 

@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import StripeWrapper from './StripeWrapper';
 
+// TODO: my bust guess is that we don't need our own dashboard to begin with, we can direct users to Stripe's dashboard
 export default function dashboard(stripeWrapper: StripeWrapper): Router {
   const router = Router();
 

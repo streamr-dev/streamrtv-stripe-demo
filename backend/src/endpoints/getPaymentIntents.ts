@@ -1,6 +1,7 @@
 import { Router, Request, Response, NextFunction } from 'express';
 import StripeWrapper from './StripeWrapper';
 
+// TODO: for debugging / development purposes, can be removed later
 export default function getPaymentIntents(stripeWrapper: StripeWrapper): Router {
   const router = Router();
 
