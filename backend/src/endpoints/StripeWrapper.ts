@@ -13,6 +13,15 @@ class StripeWrapper {
     return this.stripe.paymentIntents.list(params);
   }
 
+  public async getReceiptUrlForPaymentIntentId(paymentIntentId: string): Promise<string | undefined> {
+    const pi = await this.stripe.paymentIntents.retrieve(paymentIntentId, {
+      expand: ['latest_charge']
+    }) as any;
+    console.log("Payment Intent: \n", JSON.stringify(pi, null, 2));
+    const receiptUrl = pi.latest_charge?.receipt_url
+    return receiptUrl
+  }
+
   public async listAccounts(params: Stripe.AccountListParams) {
     return this.stripe.accounts.list(params);
   }
